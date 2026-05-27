@@ -787,3 +787,111 @@ org.apache.ibatis.binding.BindingException: Invalid bound statement (not found):
 2026-05-27T13:18:51.682+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
 2026-05-27T13:18:51.682+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed May 27 13:18:51 CST 2026, status=404, error=Not Found, path=/@vite/client}]
 2026-05-27T13:18:51.684+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2026-05-27T17:54:18.031+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/hello", parameters={}
+2026-05-27T17:54:18.058+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#hello()
+2026-05-27T17:54:18.091+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:18.094+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@693327f0]
+2026-05-27T17:54:18.110+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:54:26.621+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/goods/list?page=1&size=10", parameters={masked}
+2026-05-27T17:54:26.621+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getGoodsList(int, int)
+2026-05-27T17:54:26.682+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:26.682+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@77d1d1b4]
+2026-05-27T17:54:26.685+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:54:28.143+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/goods/1", parameters={}
+2026-05-27T17:54:28.146+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getGoods(Long)
+2026-05-27T17:54:28.211+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:28.211+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@5ed676b7]
+2026-05-27T17:54:28.213+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:54:36.946+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/api/goods", parameters={}
+2026-05-27T17:54:36.946+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#createGoods(Goods)
+2026-05-27T17:54:37.045+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.auction.master.Goods@1288c8df]
+2026-05-27T17:54:37.097+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:37.097+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@3a124026]
+2026-05-27T17:54:37.098+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:54:38.619+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/auction/list?page=1&size=10", parameters={masked}
+2026-05-27T17:54:38.619+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getSessions(int, int)
+2026-05-27T17:54:38.624+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:38.624+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@63cd057d]
+2026-05-27T17:54:38.625+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:54:44.573+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/auction/1", parameters={}
+2026-05-27T17:54:44.574+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getSession(Long)
+2026-05-27T17:54:44.576+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:44.577+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@568d6978]
+2026-05-27T17:54:44.577+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:54:46.220+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/auction", parameters={}
+2026-05-27T17:54:46.220+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#createSession(Session)
+2026-05-27T17:54:46.224+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.auction.master.Session@5c07db04]
+2026-05-27T17:54:46.233+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:46.233+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@12b0d4b7]
+2026-05-27T17:54:46.235+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:54:56.385+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : PUT "/api/auction/start/4", parameters={}
+2026-05-27T17:54:56.386+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#startSession(Long)
+2026-05-27T17:54:56.425+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:54:56.425+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@30a7b087]
+2026-05-27T17:54:56.425+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:55:42.104+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/api/bid/submit", parameters={}
+2026-05-27T17:55:42.104+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#submitBid(BidRequest)
+2026-05-27T17:55:42.105+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.auction.master.BidRequest@1f770c58]
+2026-05-27T17:55:42.153+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:55:42.153+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@21c9b3f9]
+2026-05-27T17:55:42.154+08:00 DEBUG 34376 --- [http-nio-8082-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:55:48.717+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/bid/history/4", parameters={}
+2026-05-27T17:55:48.717+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getBidHistory(Long)
+2026-05-27T17:55:48.759+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:55:48.759+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@1d4b05b1]
+2026-05-27T17:55:48.760+08:00 DEBUG 34376 --- [http-nio-8082-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:55:50.325+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/order/list?page=1&size=10", parameters={masked}
+2026-05-27T17:55:50.326+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getOrders(int, int)
+2026-05-27T17:55:50.333+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:55:50.333+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@1fc46737]
+2026-05-27T17:55:50.334+08:00 DEBUG 34376 --- [http-nio-8082-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:56:00.537+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/goods/list", parameters={}
+2026-05-27T17:56:00.537+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getGoodsList(int, int)
+2026-05-27T17:56:00.540+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:56:00.540+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@4444ac9b]
+2026-05-27T17:56:00.540+08:00 DEBUG 34376 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:56:10.280+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/goods/2", parameters={}
+2026-05-27T17:56:10.280+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getGoods(Long)
+2026-05-27T17:56:10.282+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:56:10.282+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@15c388bc]
+2026-05-27T17:56:10.283+08:00 DEBUG 34376 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:57:10.008+08:00  INFO 39756 --- [main] c.a.master.AuctionMasterApplication      : Starting AuctionMasterApplication using Java 25.0.3 with PID 39756 (F:\zijie\target\classes started by pc in F:\zijie)
+2026-05-27T17:57:10.009+08:00 DEBUG 39756 --- [main] c.a.master.AuctionMasterApplication      : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-05-27T17:57:10.009+08:00  INFO 39756 --- [main] c.a.master.AuctionMasterApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-05-27T17:57:10.689+08:00  INFO 39756 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2026-05-27T17:57:10.699+08:00  INFO 39756 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-27T17:57:10.700+08:00  INFO 39756 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-05-27T17:57:10.744+08:00  INFO 39756 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-27T17:57:10.745+08:00  INFO 39756 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 699 ms
+2026-05-27T17:57:10.861+08:00 DEBUG 39756 --- [main] c.b.m.e.s.MybatisSqlSessionFactoryBean   : Property 'mapperLocations' was not specified.
+2026-05-27T17:57:11.036+08:00 DEBUG 39756 --- [main] o.s.w.s.s.s.WebSocketHandlerMapping      : Patterns [/ws/auction/{roomId}] in 'webSocketHandlerMapping'
+2026-05-27T17:57:11.097+08:00 DEBUG 39756 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 14 mappings in 'requestMappingHandlerMapping'
+2026-05-27T17:57:11.135+08:00 DEBUG 39756 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-05-27T17:57:11.152+08:00 DEBUG 39756 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-05-27T17:57:11.169+08:00 DEBUG 39756 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-05-27T17:57:11.296+08:00  INFO 39756 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path ''
+2026-05-27T17:57:11.301+08:00  INFO 39756 --- [main] c.a.master.AuctionMasterApplication      : Started AuctionMasterApplication in 1.594 seconds (process running for 1.849)
+2026-05-27T17:57:11.303+08:00 DEBUG 39756 --- [main] c.b.m.a.DdlApplicationRunner             :   ...  DDL start create  ...  
+2026-05-27T17:57:11.304+08:00 DEBUG 39756 --- [main] c.b.m.a.DdlApplicationRunner             :   ...  DDL end create  ...  
+2026-05-27T17:57:17.480+08:00  INFO 39756 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-27T17:57:17.480+08:00  INFO 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-27T17:57:17.480+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-05-27T17:57:17.480+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-05-27T17:57:17.480+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-05-27T17:57:17.481+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@2f1088f5
+2026-05-27T17:57:17.481+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@24a6a0cd
+2026-05-27T17:57:17.481+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-05-27T17:57:17.481+08:00  INFO 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-05-27T17:57:17.485+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/goods/list", parameters={}
+2026-05-27T17:57:17.491+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getGoodsList(int, int)
+2026-05-27T17:57:17.544+08:00  INFO 39756 --- [http-nio-8082-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-27T17:57:17.649+08:00  INFO 39756 --- [http-nio-8082-exec-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@418686ae
+2026-05-27T17:57:17.649+08:00  INFO 39756 --- [http-nio-8082-exec-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-27T17:57:17.721+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:57:17.722+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@7abeec44]
+2026-05-27T17:57:17.737+08:00 DEBUG 39756 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-05-27T17:57:34.106+08:00 DEBUG 39756 --- [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/goods/list", parameters={}
+2026-05-27T17:57:34.107+08:00 DEBUG 39756 --- [http-nio-8082-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.auction.master.ApiController#getGoodsList(int, int)
+2026-05-27T17:57:34.109+08:00 DEBUG 39756 --- [http-nio-8082-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-05-27T17:57:34.110+08:00 DEBUG 39756 --- [http-nio-8082-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [com.auction.master.Result@7f0678b6]
+2026-05-27T17:57:34.111+08:00 DEBUG 39756 --- [http-nio-8082-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
