@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import ReactDOM from 'react-dom/client'
-import { Button, Card, List, Space, Toast, Badge, FloatingBubble } from 'antd-mobile'
+import { Button, Toast } from 'antd-mobile'
+import './index.css'
 
-type PageType = 'home' | 'live' | 'result' | 'history'
-
-interface AuctionItem {
+interface BidMessage {
   id: number
-  name: string
-  image: string
-  startPrice: number
-  currentPrice: number
-  increment: number
-  status: number
+  userName: string
+  price: number
+  avatar: string
 }
 
 interface BidRecord {
@@ -19,55 +15,87 @@ interface BidRecord {
   userName: string
   price: number
   time: string
+  isWinner?: boolean
 }
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<PageType>('home')
-  const [selectedAuction, setSelectedAuction] = useState<AuctionItem | null>(null)
   const [countdown, setCountdown] = useState(300)
-  const [bidRecords, setBidRecords] = useState<BidRecord[]>([])
-  const [currentPrice, setCurrentPrice] = useState(0)
-
-  const mockAuctions: AuctionItem[] = [
-    { id: 1, name: '和田玉吊坠', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400', startPrice: 0, currentPrice: 500, increment: 100, status: 1 },
-    { id: 2, name: '清代青花瓷瓶', image: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400', startPrice: 1000, currentPrice: 2500, increment: 200, status: 0 },
-    { id: 3, name: '天然翡翠手镯', image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400', startPrice: 500, currentPrice: 1200, increment: 50, status: 0 }
-  ]
-
-  const mockHistory: BidRecord[] = [
-    { id: 1, userName: '你', price: 500, time: '10:30:00' },
+  const [currentPrice, setCurrentPrice] = useState(500)
+  const [bidMessages, setBidMessages] = useState<BidMessage[]>([])
+  const [bidRecords, setBidRecords] = useState<BidRecord[]>([
+    { id: 1, userName: '你', price: 500, time: '10:30:00', isWinner: true },
     { id: 2, userName: '用户A', price: 400, time: '10:29:55' },
-    { id: 3, userName: '用户B', price: 300, time: '10:29:50' }
-  ]
+    { id: 3, userName: '用户B', price: 300, time: '10:29:50' },
+    { id: 4, userName: '用户C', price: 200, time: '10:29:45' },
+  ])
+  const [isBidding, setIsBidding] = useState(false)
+  const [isPanelExpanded, setIsPanelExpanded] = useState(false)
+  const [hearts, setHearts] = useState<{ id: number; x: number }[]>([])
+  const messageIdRef = useRef(0)
+  const heartIdRef = useRef(0)
+
+  const mockUsers = ['用户A', '用户B', '用户C', '用户D', '用户E']
+  const mockAvatars = ['👨', '👩', '🧑', '👴', '👵']
 
   useEffect(() => {
-    if (currentPage === 'live' && selectedAuction) {
-      setCurrentPrice(selectedAuction.currentPrice)
-      setBidRecords(mockHistory)
-      setCountdown(300)
-    }
-  }, [currentPage, selectedAuction])
-
-  useEffect(() => {
-    if (currentPage === 'live' && countdown > 0) {
+    if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000)
       return () => clearTimeout(timer)
-    } else if (currentPage === 'live' && countdown === 0) {
-      Toast.show('竞拍结束！')
-      setCurrentPage('result')
+    } else if (countdown === 0) {
+      Toast.show('🎉 竞拍结束！恭喜中标！')
     }
-  }, [countdown, currentPage])
+  }, [countdown])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomUserIndex = Math.floor(Math.random() * mockUsers.length)
+      const newPrice = currentPrice + 50 + Math.floor(Math.random() * 100)
+      const newMessage: BidMessage = {
+        id: messageIdRef.current++,
+        userName: mockUsers[randomUserIndex],
+        price: newPrice,
+        avatar: mockAvatars[randomUserIndex],
+      }
+      setBidMessages(prev => [...prev.slice(-5), newMessage])
+      setCurrentPrice(newPrice)
+      setBidRecords(prev => [
+        { id: Date.now(), userName: newMessage.userName, price: newPrice, time: new Date().toLocaleTimeString(), isWinner: true },
+        ...prev.map(r => ({ ...r, isWinner: false }))
+      ])
+    }, 8000)
+    return () => clearInterval(interval)
+  }, [currentPrice])
 
   const handleBid = useCallback(() => {
-    if (!selectedAuction) return
-    const newPrice = currentPrice + selectedAuction.increment
+    if (isBidding) return
+    setIsBidding(true)
+    const newPrice = currentPrice + 100
     setCurrentPrice(newPrice)
-    setBidRecords([
-      { id: Date.now(), userName: '你', price: newPrice, time: new Date().toLocaleTimeString() },
-      ...bidRecords
+    const newMessage: BidMessage = {
+      id: messageIdRef.current++,
+      userName: '你',
+      price: newPrice,
+      avatar: '😊',
+    }
+    setBidMessages(prev => [...prev.slice(-5), newMessage])
+    setBidRecords(prev => [
+      { id: Date.now(), userName: '你', price: newPrice, time: new Date().toLocaleTimeString(), isWinner: true },
+      ...prev.map(r => ({ ...r, isWinner: false }))
     ])
-    Toast.show(`🎉 出价成功！当前价格：¥${newPrice}`)
-  }, [selectedAuction, currentPrice, bidRecords])
+    Toast.show(`🎉 出价成功！¥${newPrice}`)
+    setTimeout(() => setIsBidding(false), 2000)
+  }, [currentPrice, isBidding])
+
+  const handleLike = useCallback((e: React.MouseEvent) => {
+    const newHeart = {
+      id: heartIdRef.current++,
+      x: e.clientX - 300,
+    }
+    setHearts(prev => [...prev, newHeart])
+    setTimeout(() => {
+      setHearts(prev => prev.filter(h => h.id !== newHeart.id))
+    }, 1500)
+  }, [])
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60)
@@ -75,139 +103,117 @@ const App: React.FC = () => {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
   }
 
-  const renderHome = () => (
-    <div style={{ padding: '16px', background: '#f5f5f5', minHeight: '100vh' }}>
-      <div style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '16px', color: '#d4af37' }}>🔥 实时竞拍</div>
-      <List>
-        {mockAuctions.map(item => (
-          <List.Item key={item.id} onClick={() => { setSelectedAuction(item); setCurrentPage('live'); }}>
-            <Card style={{ marginBottom: '12px' }}>
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <img src={item.image} style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px' }} alt="" />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>{item.name}</div>
-                  <div style={{ color: '#ff4d4f', fontSize: '18px', fontWeight: 'bold' }}>¥{item.currentPrice}</div>
-                  <div style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>加价幅度：¥{item.increment}</div>
-                </div>
-              </div>
-            </Card>
-          </List.Item>
-        ))}
-      </List>
-      <FloatingBubble onClick={() => setCurrentPage('history')} style={{ right: 24, bottom: 80 }}>
-        <span>📋</span>
-      </FloatingBubble>
-    </div>
-  )
-
-  const renderLive = () => (
-    <div style={{ background: '#1a1a1a', minHeight: '100vh', color: '#fff' }}>
-      <div style={{ padding: '16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <Button size="small" onClick={() => setCurrentPage('home')}>← 返回</Button>
-          <Badge content="直播中" color="#ff4d4f">
-            <span style={{ fontSize: '14px' }}>LIVE</span>
-          </Badge>
-        </div>
-        <div style={{ width: '100%', height: '200px', background: '#333', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
-          <span style={{ fontSize: '48px' }}>📺</span>
-        </div>
-        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-          <div style={{ fontSize: '28px', fontWeight: 'bold', color: countdown < 30 ? '#ff4d4f' : '#d4af37' }}>
-            {formatTime(countdown)}
-          </div>
-          <div style={{ fontSize: '14px', color: '#999' }}>剩余时间</div>
-        </div>
-        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-          <div style={{ fontSize: '36px', fontWeight: 'bold', color: '#ff4d4f' }}>¥{currentPrice}</div>
-          <div style={{ fontSize: '14px', color: '#999' }}>当前价格</div>
-        </div>
-        <Button 
-          block 
-          size="large" 
-          color="primary" 
-          style={{ 
-            height: '56px', 
-            fontSize: '20px', 
-            fontWeight: 'bold', 
-            borderRadius: '28px',
-            '--background-color': '#d4af37',
-          } as React.CSSProperties} 
-          onClick={handleBid}
-        >
-          立即出价 +¥{selectedAuction?.increment || 100}
-        </Button>
-        <div style={{ marginTop: '20px' }}>
-          <div style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '12px' }}>🏆 实时排行榜</div>
-          <List style={{ background: '#2a2a2a', borderRadius: '12px' }}>
-            {bidRecords.map((record, index) => (
-              <List.Item key={record.id} style={{ background: index === 0 ? '#3d2914' : 'transparent' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                  <span style={{ color: index === 0 ? '#d4af37' : '#fff' }}>
-                    {index === 0 ? '👑 ' : ''}{record.userName}
-                  </span>
-                  <span style={{ color: '#ff4d4f', fontWeight: 'bold' }}>¥{record.price}</span>
-                </div>
-              </List.Item>
-            ))}
-          </List>
-        </div>
-      </div>
-    </div>
-  )
-
-  const renderResult = () => (
-    <div style={{ padding: '32px 16px', background: 'linear-gradient(180deg, #d4af37 0%, #fff 100%)', minHeight: '100vh', textAlign: 'center' }}>
-      <div style={{ fontSize: '80px', marginBottom: '16px' }}>🎉</div>
-      <div style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '8px' }}>恭喜您中标！</div>
-      <div style={{ fontSize: '18px', color: '#666', marginBottom: '32px' }}>和田玉吊坠</div>
-      <div style={{ fontSize: '48px', fontWeight: 'bold', color: '#ff4d4f', marginBottom: '32px' }}>¥{currentPrice}</div>
-      <Space direction="vertical" block>
-        <Button 
-          block 
-          size="large" 
-          color="primary" 
-          style={{ 
-            height: '52px', 
-            borderRadius: '26px',
-            '--background-color': '#d4af37',
-          } as React.CSSProperties}
-        >
-          立即支付
-        </Button>
-        <Button block size="large" onClick={() => setCurrentPage('home')}>返回首页</Button>
-      </Space>
-    </div>
-  )
-
-  const renderHistory = () => (
-    <div style={{ padding: '16px', background: '#f5f5f5', minHeight: '100vh' }}>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
-        <Button size="small" onClick={() => setCurrentPage('home')}>← 返回</Button>
-        <div style={{ flex: 1, textAlign: 'center', fontSize: '18px', fontWeight: 'bold' }}>我的竞拍记录</div>
-      </div>
-      <List>
-        {mockAuctions.map(item => (
-          <List.Item key={item.id}>
-            <Card style={{ width: '100%' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span>{item.name}</span>
-                <span style={{ color: '#ff4d4f', fontWeight: 'bold' }}>¥{item.currentPrice}</span>
-              </div>
-            </Card>
-          </List.Item>
-        ))}
-      </List>
-    </div>
-  )
-
   return (
-    <>
-      {currentPage === 'home' && renderHome()}
-      {currentPage === 'live' && renderLive()}
-      {currentPage === 'result' && renderResult()}
-      {currentPage === 'history' && renderHistory()}
-    </>
+    <div className="live-container">
+      <div className="live-bg">
+        <img 
+          src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=1080" 
+          alt="商品背景" 
+          className="bg-image"
+        />
+      </div>
+
+      <div className="top-bar">
+        <div className="host-info">
+          <div className="avatars">
+            <div className="avatar">👩</div>
+            <div className="avatar avatar-2">👨</div>
+          </div>
+          <div className="host-text">
+            <div className="host-name">竞拍大师直播间</div>
+            <div className="like-count">12.5万 本场点赞</div>
+          </div>
+          <Button className="follow-btn" color="danger" size="small">关注</Button>
+        </div>
+        <div className="top-right">
+          <span className="viewer-count">👥 5万</span>
+          <div className="close-btn">✕</div>
+        </div>
+      </div>
+
+      <div className="collapsible-panel" onClick={() => setIsPanelExpanded(!isPanelExpanded)}>
+        {!isPanelExpanded ? (
+          <div className="panel-collapsed">
+            <span className="panel-icon">🏆</span>
+            <span className="panel-text">实时排行</span>
+            <span className={`collapsed-time ${countdown < 30 ? 'blink-red' : ''}`}>
+              {formatTime(countdown)}
+            </span>
+            <span className="collapsed-price">¥{currentPrice.toLocaleString()}</span>
+            <span className="panel-arrow">▼</span>
+          </div>
+        ) : (
+          <div className="panel-expanded">
+            <div className="panel-header">
+              <span className="panel-icon">🏆</span>
+              <span className="panel-text">实时排行</span>
+              <span className="panel-arrow">▲</span>
+            </div>
+            <div className="countdown-in-panel">
+              <div className={`countdown-number-small ${countdown < 30 ? 'blink-red' : ''}`}>
+                {formatTime(countdown)}
+              </div>
+              <div className="countdown-label-small">剩余时间</div>
+            </div>
+            <div className="price-in-panel">
+              <div className="price-label-small">当前最高价</div>
+              <div className="price-number-small">¥{currentPrice.toLocaleString()}</div>
+            </div>
+            <div className="ranking-list">
+              {bidRecords.slice(0, 5).map((record, index) => (
+                <div key={record.id} className={`ranking-item ${record.isWinner ? 'winner' : ''}`}>
+                  <span className="ranking-user">
+                    <span className="rank-number">{index + 1}</span>
+                    {record.userName}
+                  </span>
+                  <span className="ranking-price">¥{record.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="danmaku-area">
+        {bidMessages.map((msg, index) => (
+          <div key={msg.id} className="danmaku-item" style={{ animationDelay: `${index * 0.1}s` }}>
+            <span className="danmaku-avatar">{msg.avatar}</span>
+            <span className="danmaku-text">{msg.userName} 出价 ¥{msg.price}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="right-icons">
+        <div className="icon-btn" onClick={handleLike}>
+          <span className="icon-emoji">❤️</span>
+        </div>
+        <div className="icon-btn">
+          <span className="icon-emoji">🛒</span>
+        </div>
+        <div className="icon-btn">
+          <span className="icon-emoji">🎁</span>
+        </div>
+        <div className="icon-btn">
+          <span className="icon-emoji">↗️</span>
+        </div>
+      </div>
+
+      {hearts.map(heart => (
+        <div key={heart.id} className="floating-heart" style={{ left: heart.x }}>❤️</div>
+      ))}
+
+      <div className="bottom-bar">
+        <div className="input-placeholder">说点什么...</div>
+        <Button 
+          className={`bid-btn ${isBidding ? 'bidding' : ''}`}
+          onClick={handleBid}
+          disabled={isBidding}
+          block
+        >
+          {isBidding ? '出价中...' : `立即出价 +¥100`}
+        </Button>
+      </div>
+    </div>
   )
 }
 
